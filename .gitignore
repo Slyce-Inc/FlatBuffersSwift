@@ -33,3 +33,6 @@ DerivedData
 Carthage/Build
 result
 fbsCG
+
+# SwiftPM
+.build/
