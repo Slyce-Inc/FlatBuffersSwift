@@ -93,7 +93,7 @@ public extension FlatBuffersReader {
 
      - Returns: the final offset in the reader buffer to access a given property for a given object-offset
      */
-    public func offset(objectOffset : Offset, propertyIndex : Int) -> Offset? {
+    func offset(objectOffset : Offset, propertyIndex : Int) -> Offset? {
 
         let propOffset = propertyOffset(objectOffset: objectOffset, propertyIndex: propertyIndex)
         if propOffset == 0 {
@@ -123,7 +123,7 @@ public extension FlatBuffersReader {
 
      - Returns: the number of elements in the vector
      */
-    public func vectorElementCount(vectorOffset : Offset?) -> Int {
+    func vectorElementCount(vectorOffset : Offset?) -> Int {
         guard let vectorOffset = vectorOffset else {
             return 0
         }
@@ -145,7 +145,7 @@ public extension FlatBuffersReader {
 
      - Returns: the offset in the buffer for a given vector element
      */
-    public func vectorElementOffset(vectorOffset : Offset?, index : Int) -> Offset? {
+    func vectorElementOffset(vectorOffset : Offset?, index : Int) -> Offset? {
         guard let vectorOffset = vectorOffset else {
             return nil
         }
@@ -176,7 +176,7 @@ public extension FlatBuffersReader {
 
      - Returns: a scalar value directly from a vector for a given index
      */
-    public func vectorElementScalar<T : Scalar>(vectorOffset : Offset?, index : Int) -> T? {
+    func vectorElementScalar<T : Scalar>(vectorOffset : Offset?, index : Int) -> T? {
         guard let vectorOffset = vectorOffset else {
             return nil
         }
@@ -206,7 +206,7 @@ public extension FlatBuffersReader {
 
      - Returns: a scalar value directly from a vector for a given index
      */
-    public func get<T : Scalar>(objectOffset : Offset, propertyIndex : Int, defaultValue : T) -> T {
+    func get<T : Scalar>(objectOffset : Offset, propertyIndex : Int, defaultValue : T) -> T {
         let propOffset = propertyOffset(objectOffset: objectOffset, propertyIndex: propertyIndex)
         if propOffset == 0 {
             return defaultValue
@@ -228,7 +228,7 @@ public extension FlatBuffersReader {
 
      - Returns: a scalar value directly from a vector for a given index
      */
-    public func get<T : Scalar>(objectOffset : Offset, propertyIndex : Int) -> T? {
+    func get<T : Scalar>(objectOffset : Offset, propertyIndex : Int) -> T? {
         let propOffset = propertyOffset(objectOffset: objectOffset, propertyIndex: propertyIndex)
         if propOffset == 0 {
             return nil
@@ -249,7 +249,7 @@ public extension FlatBuffersReader {
 
      - Returns:  a buffer pointer to the subrange of the reader buffer occupied by a string
      */
-    public func stringBuffer(stringOffset : Offset?) -> UnsafeBufferPointer<UInt8>? {
+    func stringBuffer(stringOffset : Offset?) -> UnsafeBufferPointer<UInt8>? {
         guard let stringOffset = stringOffset else {
             return nil
         }
@@ -269,7 +269,7 @@ public extension FlatBuffersReader {
 
      - Returns:  the offset for the root table object
      */
-    public var rootObjectOffset : Offset? {
+    var rootObjectOffset : Offset? {
         do {
             return try scalar(at: 0) as Offset
         } catch {
@@ -393,8 +393,8 @@ public final class FlatBuffersFileReader : FlatBuffersReader {
             return a.offset == b.offset && a.lenght == b.lenght
         }
 
-        var hashValue: Int {
-            return offset
+        func hash(into hasher: inout Hasher) {
+            hasher.combine(offset)
         }
     }
 
